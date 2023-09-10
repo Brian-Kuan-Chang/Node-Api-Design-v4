@@ -2,6 +2,8 @@ import app from './server'
 import * as dotenv from "dotenv";
 
 dotenv.config();
-app.listen(3001,()=>{
-    console.log("server listen on port 3001")
+
+import config from './env/index'
+app.listen(config.port,()=>{
+    console.log(`server listen on port ${config.port}`)
 })

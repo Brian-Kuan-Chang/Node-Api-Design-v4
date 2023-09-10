@@ -25,7 +25,6 @@ export const createJWT = (user: User) => {
 
 export const protect = (req: Request, res: Response, next: NextFunction) => {
     const bearer = req.headers.authorization
-    console.log(`inside protect function, and bearer: ${bearer}`)
 
     if (!bearer) {
         res.statusCode = 401

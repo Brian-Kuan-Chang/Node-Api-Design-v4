@@ -1,5 +1,6 @@
 import {Request, Response} from "express"
 import prisma from "../db"
+import asyncWrapper from '../modules/asyncErrorHandler'
 
 export const getProducts = async (req: Request, res: Response) => {
     const user = await prisma.user.findUnique({
@@ -24,7 +25,7 @@ export const getOneProduct = async (req: Request, res: Response) => {
     res.json({data: product})
 
 }
-export const createProduct = async  (req:Request,res:Response)=>{
+export const createProduct = asyncWrapper(async  (req:Request,res:Response)=>{
     const product = await prisma.product.create({
         data:{
             name: req.body.name,
@@ -32,7 +33,7 @@ export const createProduct = async  (req:Request,res:Response)=>{
         }
     })
     res.json({data:product})
-}
+})
 
 export const updateProduct = async (req:Request,res:Response)=>{
     const updated = await  prisma.product.update({

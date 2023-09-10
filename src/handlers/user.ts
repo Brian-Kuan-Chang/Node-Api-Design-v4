@@ -1,8 +1,9 @@
 import prisma from "../db";
 import {Request, Response} from "express";
 import {comparePasswords, createJWT, hashPassword} from "../modules/auth";
+import asyncErrorHandler from "../modules/asyncErrorHandler"
 
-export const createNewUser = async (req: Request, res: Response) => {
+export const createNewUser = asyncErrorHandler(async (req: Request, res: Response) => {
     console.log(`username:${req.body.username},
             password:${req.body.password}`)
     const user = await prisma.user.create({
@@ -13,7 +14,7 @@ export const createNewUser = async (req: Request, res: Response) => {
     })
     const token = createJWT(user)
     res.json({token})
-}
+})
 
 export const signin = async (req: Request, res: Response) => {
     const user = await prisma.user.findUnique({
